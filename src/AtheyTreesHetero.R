@@ -9,7 +9,7 @@ library(dummies)
 library(readr)
 
 
-data_b <- read_dta("Data/data_ML_nonmiss_0626.dta")
+data_b <- read_dta("/home/jovyan/MLheterogeneity/Data/data_ML_nonmiss_0626.dta")
 data_b <- as.data.frame(data_b) %>% 
   dplyr::select(-a7, -bribe_combined, -salongo, -salongo_hours, -sanctions, -pubgoods) %>% dummy.data.frame( names = "tmt_ML") %>% 
   rename(tmt_100 = tmt_ML0 , 
@@ -32,7 +32,7 @@ ATE.error.full <- c()
 
 for (i in (1:100))
 {
-  i = 1
+  paste('running ', i, ' on 100')
   # Predict Y forest, Classification of X on Y with probabililties as output
   Y.forest = regression_forest(X[,],Y[,], tune.parameters = TRUE,  num.threads = 6, seed = i)
   Y.hat = predict(Y.forest)$predictions
